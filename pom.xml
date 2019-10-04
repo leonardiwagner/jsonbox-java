@@ -8,7 +8,8 @@
   <artifactId>jsonbox</artifactId>
   <version>0.0.1</version>
 
-  <name>jsonbox</name>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>A library to use jsonbox.io</description>
   <url>https://github.com/leonardiwagner/jsonbox</url>
 
   <properties>
@@ -19,16 +20,22 @@
 
   <dependencies>
     <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp</artifactId>
+        <version>4.2.0</version>
+    </dependency>
+
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
-        <groupId>com.squareup.okhttp3</groupId>
-        <artifactId>okhttp</artifactId>
-        <version>4.2.0</version>
+      <groupId>com.squareup.moshi</groupId>
+      <artifactId>moshi-kotlin</artifactId>
+      <version>1.8.0</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -77,4 +84,22 @@
       </plugins>
     </pluginManagement>
   </build>
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Wagner Leonardi</name>
+      <email>leonardiwagner@gmail.com</email>
+      <organizationUrl>https://github.com/leonardiwagner</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/leonardiwagner/jsonbox.git</connection>
+    <developerConnection>scm:git:ssh://github.com/leonardiwagner/jsonbox.git</developerConnection>
+    <url>https://github.com/leonardiwagner/jsonbox</url>
+  </scm>
 </project>

@@ -1,15 +1,32 @@
 package io.jsonbox;
 
+import java.util.HashMap;
 import java.io.IOException;
 
-import java.util.HashMap;
-
 public class JsonBoxStorage {
-    public final Http http = new Http();
+    private final Http http = new Http();
     private String id = "";
+    private String boxId = "";
+    private String collectionId = "";
     
-    public JsonBoxStorage(String id) {
-        this.id = id;
+    /**
+     * Instance for a jsonbox.io box.
+     * @param  boxId A jsonbox.io box id. It has to be at least 20 characters long. Only alphanumeric, & and _ characters allowed.
+     */
+    public JsonBoxStorage(String boxId) {
+        this.id = boxId;
+        this.boxId = boxId;
+    }
+
+    /**
+     * Instance for a jsonbox.io collection inside a box.
+     * @param  boxId A jsonbox.io box id. It has to be at least 20 characters long. Only alphanumeric, & and _ characters allowed.
+     * @param  collectionId A collection id inside a box. Only alphanumeric, & and _ characters allowed.
+     */
+    public JsonBoxStorage(String boxId, String collectionId) {
+        this.id = boxId + "/" + collectionId;
+        this.boxId = boxId;
+        this.collectionId = collectionId;
     }
 
     /**
@@ -18,7 +35,7 @@ public class JsonBoxStorage {
      * @return      a JSON string response from jsonbox.io
      */
     public String create(String json) throws IOException {
-        return http.request(id, null, "POST", new HashMap<String, String>(), json);
+        return http.request(this.id, null, "POST", new HashMap<String, String>(), json);
     }
 
     /**
@@ -26,7 +43,7 @@ public class JsonBoxStorage {
      * @return a JSON string response from jsonbox.io
      */
     public String read() throws IOException {
-        return http.request(id, null, "GET",  new HashMap<String, String>(), null);
+        return http.request(this.id, null, "GET",  new HashMap<String, String>(), null);
     }
 
     /**
@@ -44,7 +61,7 @@ public class JsonBoxStorage {
         parameters.put("limit", Integer.toString(limit));
         parameters.put("query", query);
 
-        return http.request(id, null, "GET", parameters, null);
+        return http.request(this.id, null, "GET", parameters, null);
     }
 
     /**
@@ -54,7 +71,7 @@ public class JsonBoxStorage {
      * @return          a JSON string response from jsonbox.io
      */
     public String updateByRecordId(String recordId, String json) throws IOException {
-        return http.request(id, recordId, "PUT",  new HashMap<String, String>(), json);
+        return http.request(this.id, recordId, "PUT",  new HashMap<String, String>(), json);
     }
 
     /**
@@ -63,7 +80,7 @@ public class JsonBoxStorage {
      * @return          a JSON string response from jsonbox.io
      */
     public String deleteByRecordId(String recordId) throws IOException {
-        return http.request(id, recordId, "DELETE",  new HashMap<String, String>(), null);
+        return http.request(this.id, recordId, "DELETE",  new HashMap<String, String>(), null);
     }
 
     /**
@@ -75,6 +92,22 @@ public class JsonBoxStorage {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put("query", query);
 
-        return http.request(id, null, "DELETE", parameters, null);
+        return http.request(this.id, null, "DELETE", parameters, null);
+    }
+
+    /**
+     * Get the instance box id.
+     * @return instance box id.
+     */
+    public String getBoxId(){
+        return this.boxId;
+    }
+
+    /**
+     * Get the instance collection id inside a box.
+     * @return collection id.
+     */
+    public String getCollectionId(){
+        return this.collectionId;
     }
 }

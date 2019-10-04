@@ -5,7 +5,7 @@ import java.util.Map;
 
 import okhttp3.*;
 
-public class Http {
+class Http {
   public final String url = "https://jsonbox.io";
   private final OkHttpClient client = new OkHttpClient();
   private final MediaType mediaType = MediaType.parse("application/json");
