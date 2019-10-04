@@ -11,6 +11,16 @@ public class Http {
   private static final MediaType mediaType = MediaType.parse("application/json");
 
   public String request(String id, String method, Map<String,String> parameters, String json) throws IOException {
+    HttpUrl.Builder urlBuilder = this.createBuilder(id, parameters);
+    RequestBody body = this.createBody(json);      
+    Request.Builder requestBuilder = this.createRequestBuilder(method, json, urlBuilder, body);
+    
+    Response response = client.newCall(requestBuilder.build()).execute();
+
+    return response.body().string();
+  }
+
+  private HttpUrl.Builder createBuilder(String id, Map<String,String> parameters) {
     HttpUrl.Builder urlBuilder = HttpUrl.parse(url + id)
       .newBuilder();
 
@@ -20,23 +30,31 @@ public class Http {
       }
     }
 
+    return urlBuilder;
+  }
+
+  private RequestBody createBody(String json) {
     boolean hasJsonBody = json != null && json.length() > 0;
+
     RequestBody body = null;
     if(hasJsonBody) {
       body = RequestBody.create(mediaType, json);
     }
-    
+
+    return body;
+  }
+
+  private Request.Builder createRequestBuilder(String method, String json, HttpUrl.Builder urlBuilder, RequestBody body) {
     Request.Builder requestBuilder = new okhttp3.Request.Builder()
             .url(urlBuilder.build())
             .method(method, body)
             .addHeader("cache-control", "no-cache");
     
-            
+    boolean hasJsonBody = json != null && json.length() > 0;
     if(hasJsonBody) {
       requestBuilder.addHeader("content-type", "application/json");
     }
 
-    Response response = client.newCall(requestBuilder.build()).execute();
-    return response.body().string();
+    return requestBuilder;
   }
 }
