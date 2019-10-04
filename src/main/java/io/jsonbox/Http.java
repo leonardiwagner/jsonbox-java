@@ -6,12 +6,12 @@ import java.util.Map;
 import okhttp3.*;
 
 public class Http {
-  public static final String url = "https://jsonbox.io/";
-  private static final OkHttpClient client = new OkHttpClient();
-  private static final MediaType mediaType = MediaType.parse("application/json");
+  public final String url = "https://jsonbox.io";
+  private final OkHttpClient client = new OkHttpClient();
+  private final MediaType mediaType = MediaType.parse("application/json");
 
-  public String request(String id, String method, Map<String,String> parameters, String json) throws IOException {
-    HttpUrl.Builder urlBuilder = this.createBuilder(id, parameters);
+  public String request(String storageId, String recordId, String method, Map<String,String> parameters, String json) throws IOException {
+    HttpUrl.Builder urlBuilder = this.createBuilder(storageId, recordId, parameters);
     RequestBody body = this.createBody(json);      
     Request.Builder requestBuilder = this.createRequestBuilder(method, json, urlBuilder, body);
     
@@ -20,8 +20,17 @@ public class Http {
     return response.body().string();
   }
 
-  private HttpUrl.Builder createBuilder(String id, Map<String,String> parameters) {
-    HttpUrl.Builder urlBuilder = HttpUrl.parse(url + id)
+  private HttpUrl.Builder createBuilder(String storageId, String recordId, Map<String,String> parameters) {
+    String requestUrl = this.url;
+    if(storageId != null && storageId.length() > 0){
+      requestUrl += "/" + storageId;
+
+      if(recordId != null && recordId.length() > 0) {
+        requestUrl += "/" + recordId;
+      }
+    }
+    
+    HttpUrl.Builder urlBuilder = HttpUrl.parse(requestUrl)
       .newBuilder();
 
     if(parameters.size() > 0) {
