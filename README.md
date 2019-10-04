@@ -34,12 +34,12 @@ Note: we are waiting for publishing approval, so installing via Maven is not wor
 
 | Name | Summary |
 |-----|---|
-|`create(String json)`                       | Create a record (HTTP POST) inside a box / collection. |
-|`read()`  | Read all records (HTTP GET) inside a box / collection. |
-|`read(String sort, int skip, int limit, String query)`  | Read records in a box / collection with given filter parameters (HTTP GET). |
-|`updateByRecordId(String recordId, String json)`  | Update a record (HTTP PUT) in a box / collection. |
-|`deleteByRecordId(String recordId)` | Delete a single record (HTTP DELETE) in a box / collection. |
-|`deleteByQuery(String query)` | Delete multiple records (HTTP DELETE) in a box / collection using a query string to filter. |
+|`create(String json)`                       | Create a record inside a box / collection. |
+|`read()`  | Read all records inside a box / collection. |
+|`read(String sort, int skip, int limit, String query)`  | Read records in a box / collection with given filter parameters. |
+|`updateByRecordId(String recordId, String json)`  | Update a record in a box / collection. |
+|`deleteByRecordId(String recordId)` | Delete a single record from a box / collection. |
+|`deleteByQuery(String query)` | Delete multiple records from a box / collection using a query string to filter. |
 
 Query string filter: https://github.com/vasanthv/jsonbox#filtering
 
