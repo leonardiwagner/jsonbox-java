@@ -1,56 +1,116 @@
 package io.jsonbox;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
-
 import io.jsonbox.JsonBoxStorage;
+import com.squareup.moshi.*;
 
+import java.util.*;
 import java.io.IOException;
+import org.junit.*;
+import static org.junit.Assert.*;
 
-class AppTest 
+public class AppTest 
 {
+    private static JsonBoxStorage storage = null;
+    private Moshi moshi = new Moshi.Builder().build();
+    private JsonAdapter<Record> adapter = moshi.adapter(Record.class);
+    private JsonAdapter<List<Record>> listAdapter = moshi.adapter(Types.newParameterizedType(List.class, Record.class));
+
+
+    @BeforeClass
+    public static void initialize() {
+        storage = new JsonBoxStorage("box_0c83d77bab82ce487665");
+    }
+
+    @Before
+    public void cleanRecords() throws IOException {
+        storage.deleteByQuery("name:*");
+    }
+    
     @Test
-    public void shouldAssertPost() throws IOException {
-        JsonBoxStorage storage = new JsonBoxStorage("box_0c83d77bab82ce487665");
+    public void shouldCreate() throws IOException {        
+        Record requestRecord = new Record("id", "name", 5, "");
+        String jsonRequestString = adapter.toJson(requestRecord);
 
-        String result = storage.create("{ \"a\": \"6\", \"name\": \"john\" }");
+        String jsonResultString = storage.create(jsonRequestString);
+        Record resultRecord = adapter.fromJson(jsonResultString);
 
-        assertEquals("ae", result);
+        assertEquals(requestRecord.getName(), resultRecord.getName());
+        assertNotEquals(requestRecord.getCreatedOn(), resultRecord.getCreatedOn());
     }
 
     @Test
-    public void shouldAssertGet() throws IOException {
-        JsonBoxStorage storage = new JsonBoxStorage("box_0c83d77bab82ce487665");
+    public void shouldRead() throws IOException {
+        storage.create(adapter.toJson(new Record("", "frank", 0, "")));
+        storage.create(adapter.toJson(new Record("", "amy", 0, "")));
+        storage.create(adapter.toJson(new Record("", "dalila", 0, "")));
 
-        String result = storage.read();
+        String jsonResultString = storage.read();
+        
+        List<Record> resultRecords = listAdapter.fromJson(jsonResultString);
+        List<Record> expectedRecords = new ArrayList<Record>();
 
-        assertEquals("ae", result);
+        for(Record r : resultRecords) {
+            if(r.getName().equals("frank") || r.getName().equals("amy") || r.getName().equals("dalila")) {
+                expectedRecords.add(r);
+            }
+        }
+
+        assertEquals(expectedRecords.size(), resultRecords.size());
     }
 
     @Test
-    public void shouldAssertGet2() throws IOException {
-        JsonBoxStorage storage = new JsonBoxStorage("box_0c83d77bab82ce487665");
+    public void shouldReadWithFilter() throws IOException {
+        storage.create(adapter.toJson(new Record("", "william", 18, "")));
+        storage.create(adapter.toJson(new Record("", "lisa", 21, "")));
+        storage.create(adapter.toJson(new Record("", "patricia", 52, "")));
+        storage.create(adapter.toJson(new Record("", "james", 38, "")));
+        storage.create(adapter.toJson(new Record("", "jennifer", 31, "")));
+        storage.create(adapter.toJson(new Record("", "thomas", 22, "")));
+        storage.create(adapter.toJson(new Record("", "david", 30, "")));
+        storage.create(adapter.toJson(new Record("", "elizabeth", 30, "")));
 
-        String result = storage.read("", 0, 0, "");
+        String jsonResultString = storage.read("-name", 1, 2, "age:<35,name:*i*");
 
-        assertEquals("ae", result);
+        List<Record> resultRecords = listAdapter.fromJson(jsonResultString);
+
+        assertEquals(resultRecords.size(), 2);
+        assertEquals(resultRecords.get(0).getName(), "lisa");
+        assertEquals(resultRecords.get(1).getName(), "jennifer");
     }
 
     @Test
     public void shouldUpdate() throws IOException {
-        JsonBoxStorage storage = new JsonBoxStorage("box_0c83d77bab82ce487665");
+        String jsonCreateResultString = storage.create(adapter.toJson(new Record("", "william", 18, "")));
+        Record createResultRecord = adapter.fromJson(jsonCreateResultString);
 
-        String result = storage.updateByRecordId("5d974b13f41b240017e71846", "{ \"a\": \"5\", \"name\": \"mariaahn\" }");
 
-        assertEquals("ae", result);
+        String result = storage.updateByRecordId(createResultRecord.getId(), adapter.toJson(new Record("", "william", 19, "")));
+        Record resultMessage = adapter.fromJson(result);
+
+        assertEquals(resultMessage.getMessage(), "Record updated.");
     }
 
     @Test
     public void shouldDelete() throws IOException {
-        JsonBoxStorage storage = new JsonBoxStorage("box_0c83d77bab82ce487665");
+        String jsonCreateResultString = storage.create(adapter.toJson(new Record("", "william", 18, "")));
+        Record createResultRecord = adapter.fromJson(jsonCreateResultString);
 
-        String result = storage.deleteByRecordId("5d974b13f41b240017e71846");
+        String result = storage.deleteByRecordId(createResultRecord.getId());
+        Record resultMessage = adapter.fromJson(result);
 
-        assertEquals("ae", result);
+        assertEquals(resultMessage.getMessage(), "Record removed.");
     }
+
+    @Test
+    public void shouldDeleteByQuery() throws IOException {
+        storage.create(adapter.toJson(new Record("", "william", 18, "")));
+        storage.create(adapter.toJson(new Record("", "mile", 18, "")));
+        storage.create(adapter.toJson(new Record("", "amy", 18, "")));
+
+        String result = storage.deleteByQuery("name:*a*");
+        Record resultMessage = adapter.fromJson(result);
+
+        assertEquals(resultMessage.getMessage(), "2 Records removed.");
+    }
+
 }

@@ -12,7 +12,7 @@ class Http {
 
   public String request(String storageId, String recordId, String method, Map<String,String> parameters, String json) throws IOException {
     HttpUrl.Builder urlBuilder = this.createBuilder(storageId, recordId, parameters);
-    RequestBody body = this.createBody(json);      
+    RequestBody body = this.createBody(json);
     Request.Builder requestBuilder = this.createRequestBuilder(method, json, urlBuilder, body);
     
     Response response = client.newCall(requestBuilder.build()).execute();
