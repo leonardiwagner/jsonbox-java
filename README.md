@@ -1,5 +1,5 @@
 # jsonbox-java ![Travis (.org)](https://img.shields.io/travis/leonardiwagner/jsonbox-java?style=flat-square) ![Coveralls github](https://img.shields.io/coveralls/github/leonardiwagner/jsonbox-java?style=flat-square) ![Maven Central](https://img.shields.io/maven-central/v/io.jsonbox/jsonbox?style=flat-square)
-A Java / JVM wrapper for [jsonbox.io](https://jsonbox.io)
+JVM library for [jsonbox.io](https://jsonbox.io)
 
 ## Quick Example
 ```java
