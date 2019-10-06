@@ -43,6 +43,38 @@ Note: we are waiting for publishing approval, so installing via Maven is not wor
 
 Query string filter: https://github.com/vasanthv/jsonbox#filtering
 
+
+## Deploy
+
+Set maven settings.xml file:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+   <servers>
+      <server>
+         <id>ossrh</id>
+         <username>USERNAME_TOKEN</username>
+         <password>PASSWORD_TOKEN</password>
+      </server>
+   </servers>
+   <profiles>
+      <profile>
+         <id>ossrh</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <properties>
+            <gpg.passphrase>GPG_KEY</gpg.passphrase>
+         </properties>
+      </profile>
+   </profiles>
+</settings>
+```
+
+Then run `deploy` via maven:
+
+`mvn clean deploy -P release`
+
 ## Contribution
 
 Feel free to contribute. Just open an issue to discuss something before creating a PR.
