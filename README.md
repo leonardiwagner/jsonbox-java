@@ -1,7 +1,7 @@
-# jsonbox
-A Java / JVM wrapper for jsonbox.io
+# jsonbox-java ![Travis (.org)](https://img.shields.io/travis/leonardiwagner/jsonbox-java?style=flat-square) ![Coveralls github](https://img.shields.io/coveralls/github/leonardiwagner/jsonbox-java?style=flat-square) ![Maven Central](https://img.shields.io/maven-central/v/io.jsonbox/jsonbox?style=flat-square)
+A Java / JVM wrapper for [jsonbox.io](https://jsonbox.io)
 
-## Example
+## Quick Example
 ```java
 import io.jsonbox.JsonBoxStorage;
 
