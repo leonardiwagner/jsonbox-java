@@ -46,34 +46,7 @@ Query string filter: https://github.com/vasanthv/jsonbox#filtering
 
 ## Deploy
 
-Set maven settings.xml file:
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<settings>
-   <servers>
-      <server>
-         <id>ossrh</id>
-         <username>USERNAME_TOKEN</username>
-         <password>PASSWORD_TOKEN</password>
-      </server>
-   </servers>
-   <profiles>
-      <profile>
-         <id>ossrh</id>
-         <activation>
-            <activeByDefault>true</activeByDefault>
-         </activation>
-         <properties>
-            <gpg.passphrase>GPG_KEY</gpg.passphrase>
-         </properties>
-      </profile>
-   </profiles>
-</settings>
-```
-
-Then run `deploy` via maven:
-
-`mvn clean deploy -P release`
+[Deploy via Maven](https://github.com/leonardiwagner/jsonbox/wiki/Maven-Deploy)
 
 ## Contribution
 
