@@ -59,7 +59,7 @@ public class JsonBoxStorage {
         parameters.put("sort", sort);
         parameters.put("skip", Integer.toString(skip));
         parameters.put("limit", Integer.toString(limit));
-        parameters.put("query", query);
+        parameters.put("q", query);
 
         return http.request(this.id, null, "GET", parameters, null);
     }
@@ -90,7 +90,7 @@ public class JsonBoxStorage {
      */
     public String deleteByQuery(String query) throws IOException {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put("query", query);
+        parameters.put("q", query);
 
         return http.request(this.id, null, "DELETE", parameters, null);
     }
