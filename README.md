@@ -7,9 +7,9 @@ Demo example:
 //Create a storage
 JsonBoxStorage storage = new JsonBoxStorage("box30c83d77bab82ce487665");
 //Create records
-storage.create(new Record("john", 25));
+storage.create(adapter.toJson(new Record("john")));
 //Read records
-List<Record> records = jsonAdapter.fromJson(storage.read());
+List<Record> records = adapter.fromJson(storage.read());
 ```
 ## Starting Guide
 1. [Installation](https://github.com/leonardiwagner/jsonbox-java/wiki/Usage-examples#1-add-jsonbox-library-in-your-project-dependencies-if-you-are-using-gradle-scala-or-kotlin-see-their-dependency-script-here-for-clojure-we-have--an-exclusive-guide-here)
