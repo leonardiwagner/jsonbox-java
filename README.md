@@ -4,7 +4,8 @@ JVM library for [jsonbox.io](https://jsonbox.io): A HTTP based JSON storage. It 
 
 ```java
 JsonBoxStorage storage = new JsonBoxStorage("box30c83d77bab82ce487665");
-String result = storage.create("{\"name\":\"john\",\"age\":23}");
+storage.create(new Record("john", 25));
+List<Record> records = listAdapter.fromJson(storage.read());
 ```
 ## Starting Guide
 1. [Installation](https://github.com/leonardiwagner/jsonbox-java/wiki/Usage-examples#1-add-jsonbox-library-in-your-project-dependencies-if-you-are-using-gradle-scala-or-kotlin-see-their-dependency-script-here-for-clojure-we-have--an-exclusive-guide-here)
