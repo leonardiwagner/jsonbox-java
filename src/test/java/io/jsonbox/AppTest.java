@@ -18,14 +18,14 @@ public class AppTest
 
     @BeforeClass
     public static void initialize() {
-        storage = new JsonBoxStorage("box_0c83d77bab82ce487665");
+        storage = new JsonBoxStorage();
     }
 
     @Before
     public void cleanRecords() throws IOException {
-        storage.deleteByQuery("name:*");
+        storage.deleteFiltering("name:*");
     }
-    
+
     @Test
     public void shouldCreate() throws IOException {        
         Record requestRecord = new Record("id", "name", 5, "");
@@ -69,7 +69,7 @@ public class AppTest
         storage.create(adapter.toJson(new Record("", "david", 30, "")));
         storage.create(adapter.toJson(new Record("", "elizabeth", 30, "")));
 
-        String jsonResultString = storage.read("-name", 1, 2, "age:<35,name:*i*");
+        String jsonResultString = storage.read(1, 2, "age:<35,name:*i*", "-name");
 
         List<Record> resultRecords = listAdapter.fromJson(jsonResultString);
 
@@ -80,11 +80,11 @@ public class AppTest
 
     @Test
     public void shouldUpdate() throws IOException {
-        String jsonCreateResultString = storage.create(adapter.toJson(new Record("", "william", 18, "")));
+        String jsonCreateResultString = storage.create(adapter.toJson(new Record("william", 18)));
         Record createResultRecord = adapter.fromJson(jsonCreateResultString);
 
 
-        String result = storage.updateByRecordId(createResultRecord.getId(), adapter.toJson(new Record("", "william", 19, "")));
+        String result = storage.update(createResultRecord.getId(), adapter.toJson(new Record("william", 19)));
         Record resultMessage = adapter.fromJson(result);
 
         assertEquals(resultMessage.getMessage(), "Record updated.");
@@ -92,10 +92,10 @@ public class AppTest
 
     @Test
     public void shouldDelete() throws IOException {
-        String jsonCreateResultString = storage.create(adapter.toJson(new Record("", "william", 18, "")));
+        String jsonCreateResultString = storage.create(adapter.toJson(new Record("william", 18)));
         Record createResultRecord = adapter.fromJson(jsonCreateResultString);
 
-        String result = storage.deleteByRecordId(createResultRecord.getId());
+        String result = storage.delete(createResultRecord.getId());
         Record resultMessage = adapter.fromJson(result);
 
         assertEquals(resultMessage.getMessage(), "Record removed.");
@@ -107,7 +107,7 @@ public class AppTest
         storage.create(adapter.toJson(new Record("", "mile", 18, "")));
         storage.create(adapter.toJson(new Record("", "amy", 18, "")));
 
-        String result = storage.deleteByQuery("name:*a*");
+        String result = storage.deleteFiltering("name:*a*");
         Record resultMessage = adapter.fromJson(result);
 
         assertEquals(resultMessage.getMessage(), "2 Records removed.");

@@ -7,6 +7,13 @@ class Record {
   private final int age;
   private final String _createdOn;
 
+  public Record(String name, int age) {
+    this._id = "";
+    this.name = name;
+    this.age = age;
+    this._createdOn = "";
+  }
+
   public Record(String _id, String name, int age, String _createdOn) {
     this._id = _id;
     this.name = name;
