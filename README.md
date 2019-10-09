@@ -1,4 +1,7 @@
-# jsonbox-java ![Travis (.org)](https://img.shields.io/travis/leonardiwagner/jsonbox-java?style=flat-square) ![Coveralls github](https://img.shields.io/coveralls/github/leonardiwagner/jsonbox-java?style=flat-square) ![Maven Central](https://img.shields.io/maven-central/v/io.jsonbox/jsonbox?style=flat-square)
+# jsonbox-java 
+[![Travis (.org)](https://img.shields.io/travis/leonardiwagner/jsonbox-java?style=flat-square&logo=travis)](https://travis-ci.org/leonardiwagner/jsonbox-java)
+[![Coveralls github](https://img.shields.io/coveralls/github/leonardiwagner/jsonbox-java?style=flat-square)](https://coveralls.io/github/leonardiwagner/jsonbox-java)
+[![Maven Central](https://img.shields.io/maven-central/v/io.jsonbox/jsonbox?color=light-green&logo=java&style=flat-square)](https://search.maven.org/artifact/io.jsonbox/jsonbox)
 
 JVM library for [jsonbox.io](https://jsonbox.io): A HTTP based JSON storage. It lets you store, read & modify JSON data over HTTP APIs for FREE. Ideal for small projects, prototypes or hackathons, where you don't have to spin up your own data store.
 
@@ -21,9 +24,9 @@ List<Record> records = adapter.fromJson(storage.read());
 
 | Name | Summary |
 |-----|---|
-|`JsonBoxStorage()`                       | Instance for a jsonbox.io box, a random box id will be generated, you can use `getBoxId()` to retrieve the generated box id. |
-|`JsonBoxStorage(String boxId)`                       | Instance for a jsonbox.io box. |
-|`JsonBoxStorage(String boxId, String collectionId)`  | Instance for a jsonbox.io collection inside a box. |
+|`JsonBoxStorage()`                       | Instance for a jsonbox.io box, a random box id will be generated, you can use `getBoxId()` to retrieve the generated box id |
+|`JsonBoxStorage(String boxId)`                       | Instance for a jsonbox.io box |
+|`JsonBoxStorage(String boxId, String collectionId)`  | Instance for a jsonbox.io collection inside a box |
 
 ### Functions
 
