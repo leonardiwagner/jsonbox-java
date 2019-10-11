@@ -9,7 +9,7 @@
   <version>1.0.3</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
-  <description>A library to use jsonbox.io</description>
+  <description>JVM library for jsonbox.io storage</description>
   <url>https://github.com/leonardiwagner/jsonbox</url>
 
   <properties>
