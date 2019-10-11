@@ -77,7 +77,6 @@ public class JsonBoxStorage {
      * Read records with given filter parameters (HTTP GET)
      * @param  skip  skip certain number of records, it can be used for pagination. (default: 0)
      * @param  limit limit the results to a certain number of records, it can be used for pagination. (default: 20, max: 1000)
-     * @param  filter query for filtering values, check format at: https://github.com/vasanthv/jsonbox#filtering
      * @return       a JSON string response from jsonbox.io
      */
     public String read(int skip, int limit) throws IOException {
