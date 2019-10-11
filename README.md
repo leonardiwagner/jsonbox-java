@@ -1,7 +1,4 @@
-# jsonbox-java 
-[![Travis (.org)](https://img.shields.io/travis/leonardiwagner/jsonbox-java?style=flat-square&logo=travis)](https://travis-ci.org/leonardiwagner/jsonbox-java)
-[![Coveralls github](https://img.shields.io/coveralls/github/leonardiwagner/jsonbox-java?style=flat-square)](https://coveralls.io/github/leonardiwagner/jsonbox-java)
-[![Maven Central](https://img.shields.io/maven-central/v/io.jsonbox/jsonbox?color=light-green&logo=java&style=flat-square)](https://search.maven.org/artifact/io.jsonbox/jsonbox)
+# jsonbox-java  [![Travis (.org)](https://img.shields.io/travis/leonardiwagner/jsonbox-java?style=flat-square&logo=travis)](https://travis-ci.org/leonardiwagner/jsonbox-java) [![Coveralls github](https://img.shields.io/coveralls/github/leonardiwagner/jsonbox-java?style=flat-square)](https://coveralls.io/github/leonardiwagner/jsonbox-java) [![Maven Central](https://img.shields.io/maven-central/v/io.jsonbox/jsonbox?color=light-green&logo=java&style=flat-square)](https://search.maven.org/artifact/io.jsonbox/jsonbox)
 
 JVM library for [jsonbox.io](https://jsonbox.io): A HTTP based JSON storage. It lets you store, read & modify JSON data over HTTP APIs for FREE. Ideal for small projects, prototypes or hackathons, where you don't have to spin up your own data store.
 
@@ -54,8 +51,10 @@ List<Record> records = adapter.fromJson(storage.read());
 |-----|---|
 |`readFiltering(String filter)`  | Read applying only filtering |
 |`readSorting(String sort)` | Read applying only sorting |
-|`read(int skip, int limit)`  | Read applying only pagination |
-|`read(int skip, int limit, String filter)` | Read applying only pagination and filtering |
+|`read(int skip, int limit)`  | Read applying only pagination** |
+|`read(int skip, int limit, String filter)` | Read applying only pagination and filtering** |
+
+**default sorting is `_createdOn` desc.
 
 ## Contribution
 
