@@ -6,7 +6,7 @@
 
   <groupId>io.jsonbox</groupId>
   <artifactId>jsonbox</artifactId>
-  <version>0.0.2</version>
+  <version>1.0.3</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A library to use jsonbox.io</description>
